@@ -72,10 +72,11 @@ class BigQuantModule:
         general_features = []
         for expr in self.__label_expr:
             general_features += bigexpr.extract_variables(expr)
+            if len(general_features) == 1:
+                if 'label' in general_features[0]:
+                    raise Exception('label变量不能使用在第一个表达式上')
         if len(general_features) < 1:
             raise Exception('没有标注表达式')
-        if 'label' in general_features[0]:
-            raise Exception('label变量不能使用在第一个表达式上')
         general_features = set(general_features)
         if 'label' in general_features:
             general_features.remove('label')
